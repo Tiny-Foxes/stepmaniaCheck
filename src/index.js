@@ -1,11 +1,27 @@
-const fs = require('fs-extra')
-const path = require('path')
 const si = require('systeminformation')
+const checkModule = require('./checks/index.js')
+const givenArguments = process.argv.slice(2)
+
+if (givenArguments.length === 0) {
+    console.error('StepMania installation path has not been given, giving up.')
+    return
+}
+
 global.infoStorage = {
-    os: null,
-    
-    // common stuff
-    stepmania: null,
+    platform: null,
+    distro: null,
+    release: null,
+    codename: null,
+    kernel: null,
+    arch: null,
+    build: null,
+    servicepack: null,
+
+    stepmaniaProductName: null,
+    stepmaniaProductVersion: null,
+    stepmaniaVersion: null,
+    stepmaniaDescription: null,
+    stepmaniaOriginalName: null,
     theme: null,
     noteskin: null,
     judgment: null,
@@ -66,6 +82,5 @@ global.infoStorage = {
     vsync: null,
     windowed: null,
 }
-( async () => {
-    infoStorage.add('')
-})()
+
+const result = checkModule.main(si, givenArguments)
