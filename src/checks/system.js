@@ -10,7 +10,6 @@ exports.main = async (si) => {
         global.infoStorage.build = system.build
         global.infoStorage.servicepack = system.servicepack
 
-        console.log(global.infoStorage)
         return global.infoStorage
     } catch (e) {
         console.error('Unexpected error when calling OS info: ', e.toString())

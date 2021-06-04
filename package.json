@@ -10,6 +10,8 @@
   "license": "Apache License 2.0",
   "dependencies": {
     "fs-extra": "^10.0.0",
+    "get-file-properties": "^1.0.1",
+    "ini-parser": "0.0.2",
     "systeminformation": "^5.7.4"
   }
 }

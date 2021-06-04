@@ -17,15 +17,11 @@ global.infoStorage = {
     build: null,
     servicepack: null,
 
+    detectedStepmania: null,
     stepmaniaProductName: null,
-    stepmaniaProductVersion: null,
     stepmaniaVersion: null,
-    stepmaniaDescription: null,
-    stepmaniaOriginalName: null,
+    stepmaniaManufacturer: null,
     theme: null,
-    noteskin: null,
-    judgment: null,
-    toastie: null,
 
     // Save stuff
     portable: null,
@@ -58,9 +54,9 @@ global.infoStorage = {
     menuTimer: null,
     monkeyInput: null,
     movieColorDepth: null,
-    MuteActions: null,
+    muteActions: null,
     dedicatedMenuButtons: null,
-    PercentageScoring: null,
+    percentageScoring: null,
     refreshRate: null,
 
     // show stuff
@@ -75,7 +71,7 @@ global.infoStorage = {
     soundVolume: null,
     textureColorDepth: null,
     useOldJoystickMapping: null,
-    usePointsAndBlending: null,
+    usePointsandBlending: null,
     useUnlockSystem: null,
     videoRenderers: null,
     visualDelaySeconds: null,
