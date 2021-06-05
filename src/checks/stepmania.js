@@ -18,6 +18,21 @@ const structures = {
         'Scripts',
         'Songs'
     ],
+    "Etterna": [
+        'Announcers',
+        'Assets',
+        'BackgroundEffects',
+        'BackgroundTransitions',
+        'BGAnimations',
+        'Data',
+        'Docs',
+        'NoteSkins',
+        'Program',
+        'Screenshots',
+        'Scripts',
+        'Songs',
+        'Themes'
+    ],
     "5.0 or 5.1": [
         'Announcers',
         'BackgroundEffects',
@@ -107,7 +122,7 @@ const findSaveDir = async (args) => {
             )
         ) {
             const smfolder = path.join(appdata, `/${smFolderName.keys().next().value}/Save`)
-            console.info(`Found stepmania version by save folder in appdata: ${folder}, accessing ${smfolder}`)
+            console.info(`Found stepmania version by save folder in appdata, accessing ${smfolder}`)
             return smfolder
         }
         
@@ -156,7 +171,7 @@ exports.main = async (_, args) => {
         }
 
         if (!fs.existsSync(path.join(saveFolder, `/${preferenceName}.ini`))) {
-            console.warn("There's no Preferences.ini inside your Save folder...what? This doesn't support NotITG")
+            console.warn("There's no Preferences.ini inside your Save folder...what?")
             return null
         }
 
@@ -214,6 +229,8 @@ exports.main = async (_, args) => {
             global.infoStorage.stepmaniaProductName = properties.FileName
             global.infoStorage.stepmaniaManufacturer = properties.Manufacturer
         }
+
+        return global.infoStorage
     } catch (e) {
         console.error('Unexpected error: ', e.toString())
         return null

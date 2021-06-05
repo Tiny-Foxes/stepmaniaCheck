@@ -1,5 +1,5 @@
 const si = require('systeminformation')
-const checkModule = require('./checks/index.js')
+const stepmaniaCheck = require('./stepmaniaCheck.js')
 const parser = require('ini-parser')
 const path = require('path')
 const config = parser.parseFileSync(path.join(__dirname, '../config.ini'))
@@ -9,7 +9,7 @@ const defineArguments = (config, args) => {
     const savePath = args[1] || config.variables.savePath || null
     const preferenceName = args[2] || config.variables.preferenceName || "Preferences"
     const programName = args[3] || config.variables.programName || "StepMania"
-    const programDataName = args[4] || config.variables.programDataName || "stepmania"
+    const programDataName = args[4] || config.variables.programDataName || "StepMania"
 
     return { stepmaniaPath, savePath, preferenceName, programName, programDataName }
 }
@@ -92,4 +92,4 @@ global.infoStorage = {
     windowed: null,
 }
 
-const result = checkModule.main(si, args)
+stepmaniaCheck.main(si, args)
