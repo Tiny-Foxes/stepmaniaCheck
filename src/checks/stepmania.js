@@ -32,6 +32,24 @@ const structures = {
         'Scripts',
         'Songs',
         'Themes'
+    ],
+    "NotITG": [
+        'BackgroundEffects',
+        'BackgroundTransitions',
+        'BGAnimations',
+        'Cache',
+        'Characters',
+        'Courses',
+        'CryptPackages',
+        'Data',
+        'Docs',
+        'NoteSkins',
+        'Packages',
+        'Program',
+        'RandomMovies',
+        'Songs',
+        'Themes',
+        'UserPacks'
     ]
 }
 
@@ -44,6 +62,7 @@ const detectVersionByDirs = (dirs) => {
 
     for (let i = 0; i < versions.length; i++) {
         if (structures[versions[i]].every(checkForDir)) {
+            console.log('Detected ', versions[i])
             matches.push(versions[i])
         } else {
             console.log(`${versions[i]} doesn't match`)
@@ -53,10 +72,17 @@ const detectVersionByDirs = (dirs) => {
     return matches.length === 0 ? null : matches
 }
 
-const findSaveDir = async (stepmaniaPath) => {
+const findSaveDir = async (args) => {
+    const { stepmaniaPath, savePath, programDataName } = args
+
+    // Handle null
+    if (!!savePath && fs.existsSync(savePath)) {
+        return savePath
+    }
+
     if (global.infoStorage.portable && fs.existsSync(path.join(stepmaniaPath, '/Save'))) {
         return path.join(stepmaniaPath, '/Save')
-    } 
+    }
     
     /*
     if (!global.infoStorage.platform.includes('win') && !args[1]) {
@@ -73,7 +99,7 @@ const findSaveDir = async (stepmaniaPath) => {
         const smFolderName = new Set()
         if (stepmaniaFolders.some(
                 (dir) => {
-                    if (dir.includes('stepmania')) {
+                    if (dir.includes(programDataName)) {
                         smFolderName.add(dir)
                         return dir
                     }
@@ -99,7 +125,7 @@ const addIfExists = (value, addAs) => {
 }
 
 exports.main = async (_, args) => {
-    const stepmaniaPath = args[0]
+    const { stepmaniaPath, preferenceName, programName }  = args
 
     if (!fs.existsSync(stepmaniaPath)) {
         console.log('Installation path does not exist, giving up.')
@@ -122,19 +148,19 @@ exports.main = async (_, args) => {
             global.infoStorage.portable = false
         }
         
-        const saveFolder = await findSaveDir(stepmaniaPath)
+        const saveFolder = await findSaveDir(args)
 
         if (!saveFolder) {
             console.warn('Unable to find save folder. :(')
             return null
         }
 
-        if (!fs.existsSync(path.join(saveFolder, '/Preferences.ini'))) {
+        if (!fs.existsSync(path.join(saveFolder, `/${preferenceName}.ini`))) {
             console.warn("There's no Preferences.ini inside your Save folder...what? This doesn't support NotITG")
             return null
         }
 
-        const save = parser.parseFileSync(path.join(saveFolder, '/Preferences.ini'))
+        const save = parser.parseFileSync(path.join(saveFolder, `/${preferenceName}.ini`))
         // Prepare for wall of text.
         addIfExists(save.Options.AdditionalCourseFolders, "additionalCourseFolders")
         addIfExists(save.Options.AdditionalFolders, "additionalFolders")
@@ -182,7 +208,7 @@ exports.main = async (_, args) => {
         addIfExists(save.Options.Windowed, "windowed")
 
         if (global.infoStorage.platform.includes('win')) {
-            const properties = await getFileProperties(path.join(stepmaniaPath, '/Program/StepMania.exe'))
+            const properties = await getFileProperties(path.join(stepmaniaPath, `/Program/${programName}.exe`))
 
             global.infoStorage.stepmaniaVersion = properties.Version
             global.infoStorage.stepmaniaProductName = properties.FileName
