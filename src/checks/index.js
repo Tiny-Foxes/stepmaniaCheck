@@ -1,9 +1,8 @@
 const systemCheck = require('./system.js')
 const stepmaniaCheck = require('./stepmania.js')
-exports.main = async (si, args) => {
-    const systemPass = await systemCheck.main(si)
-    const stepmaniaPass = await stepmaniaCheck.main(si, args)
+exports.main = async (Data, args, si) => {
+    await systemCheck.main(Data, args, si)
+    await stepmaniaCheck.main(Data, args, si)
 
-    console.log(global.infoStorage)
-    return !systemPass && !stepmaniaPass ? null : global.infoStorage
+    return Data.infoStorage
 }

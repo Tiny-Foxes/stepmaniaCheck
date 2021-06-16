@@ -1,16 +1,16 @@
-exports.main = async (si) => {
+exports.main = async (Data, args, si) => {
     try {
         const system = await si.osInfo()
-        global.infoStorage.platform = system.platform
-        global.infoStorage.distro = system.distro
-        global.infoStorage.release = system.release
-        global.infoStorage.codename = system.codename
-        global.infoStorage.kernel = system.kernel
-        global.infoStorage.arch = system.arch
-        global.infoStorage.build = system.build
-        global.infoStorage.servicepack = system.servicepack
+        Data.defineValue('platform',    system.platform)
+        Data.defineValue('distro',      system.distro)
+        Data.defineValue('release',     system.release)
+        Data.defineValue('codename',    system.codename)
+        Data.defineValue('kernel',      system.kernel)
+        Data.defineValue('arch',        system.arch)
+        Data.defineValue('build',       system.build)
+        Data.defineValue('servicepack', system.servicepack)
 
-        return global.infoStorage
+        return Data.infoStorage
     } catch (e) {
         console.error('Unexpected error when calling OS info: ', e.toString())
         return null
