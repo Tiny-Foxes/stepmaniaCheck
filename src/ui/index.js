@@ -18,7 +18,7 @@ exports.Merine = class {
         this.animation = null
     }
 
-    display(Data, order) {
+    display(Data, order, args) {
         switch (this.screen) {
             case 'loading':
                 if (order === 'stop') {
@@ -43,10 +43,10 @@ exports.Merine = class {
             break
             case 'failed':
                 console.log(chalk.red('Failed'))
-                // console.clear()
+                if (args.clearConsole) console.clear()
             break
             case 'stats':
-                console.clear()
+                if (args.clearConsole) console.clear()
                 let displayData = [
                     ['Property', 'Value', 'Status']
                 ]

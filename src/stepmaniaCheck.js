@@ -7,16 +7,16 @@ exports.main = async (si, args) => {
     await Data.allPropertyToDefault()
     Merine.display(Data, 'do')
     const result = await checkModule.main(Data, args, si)
-    Merine.display(Data, 'stop')
+    Merine.display(Data, 'stop', args)
 
     if (!result) {
         Merine.screen = 'failed'
-        Merine.display(Data, 'do')
+        Merine.display(Data, 'do', args)
         console.log('Unable to get any info, giving up.')
         return null
     }
 
     Merine.screen = 'stats'
-    Merine.display(Data, 'do')
+    Merine.display(Data, 'do', args)
     // TODO: Execute UI first and make interactions based errors.
 }

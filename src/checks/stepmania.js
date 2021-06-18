@@ -209,13 +209,17 @@ exports.main = async (Data, args) => {
     )
 
     // Prepare for wall of text.
-    Data.properties.forEach(async (prop) => {
-      await addIfExists(Data, save.Options[prop], prop)
-    })
-
-    Data.properties.forEach(async (prop) => {
-      await Data.checkForErrors(Data.infoStorage, prop, args)
-    })
+    try {
+      Data.properties.forEach(async (prop) => {
+        await addIfExists(Data, save.Options[prop], prop)
+      })
+  
+      Data.properties.forEach(async (prop) => {
+        await Data.checkForErrors(Data.infoStorage, prop, args)
+      })
+    } catch (e) {
+      console.log(e)
+    }
   
     return Data.infoStorage
   } catch (e) {

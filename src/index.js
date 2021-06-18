@@ -10,8 +10,13 @@ const defineArguments = (config, args) => {
     const preferenceName = args[2] || config.variables.preferenceName || "Preferences"
     const programName = args[3] || config.variables.programName || "StepMania"
     const programDataName = args[4] || config.variables.programDataName || "StepMania"
+    let clearConsole = args[5] || Number(config.variables.clearConsole) || 0
 
-    return { stepmaniaPath, savePath, preferenceName, programName, programDataName }
+    if (clearConsole && clearConsole !== 0) {
+        clearConsole = 1
+    }
+
+    return { stepmaniaPath, savePath, preferenceName, programName, programDataName, clearConsole }
 }
 
 const args = defineArguments(config, givenArguments)
